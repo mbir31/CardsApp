@@ -1,0 +1,6 @@
+{
+  "name": "CardsApp",
+  "description": "Offline-first business card scanner & contact manager with hybrid AI OCR (English + Bangla)",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
