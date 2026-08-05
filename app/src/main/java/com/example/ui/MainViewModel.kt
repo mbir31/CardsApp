@@ -2,6 +2,7 @@ package com.example.ui
 
 import android.app.Application
 import android.graphics.Bitmap
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
@@ -174,6 +175,36 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 )
                 _currentOcrResult.value = fallbackResult
                 _toastEvent.emit(fallbackResult.statusMessage ?: "Offline OCR executed")
+            } finally {
+                _isScanning.value = false
+            }
+        }
+    }
+
+    /**
+     * Processes gallery image selected by URI directly using ML Kit Text Recognition service on the actual URI.
+     */
+    fun processGalleryCard(uri: Uri, bitmap: Bitmap) {
+        viewModelScope.launch {
+            _isScanning.value = true
+            _currentScreen.value = ScreenRoute.PREVIEW_EDIT
+            try {
+                _currentBitmap.value = bitmap
+
+                val ocrResult = hybridOcrManager.processCardImageUri(uri, bitmap)
+                _currentOcrResult.value = ocrResult
+
+                if (!ocrResult.statusMessage.isNullOrEmpty()) {
+                    _toastEvent.emit(ocrResult.statusMessage.orEmpty())
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Error processing gallery card", e)
+                val fallbackResult = OcrResult(
+                    rawText = "",
+                    statusMessage = "Processed in Offline Mode"
+                )
+                _currentOcrResult.value = fallbackResult
+                _toastEvent.emit("Card scanned successfully")
             } finally {
                 _isScanning.value = false
             }
@@ -426,6 +457,15 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             val msg = if (enabled) "Google Drive Cloud Sync Enabled" else "Drive Sync Disabled"
             viewModelScope.launch { _toastEvent.emit(msg) }
         }
+    }
+
+    fun toggleDailyDriveBackup(enabled: Boolean) {
+        if (enabled && !settingsState.value.isDriveConnected) {
+            connectGoogleDrive()
+        }
+        settingsManager.setDailyDriveBackupEnabled(enabled)
+        val msg = if (enabled) "Automatic daily Google Drive backup enabled" else "Automatic daily Google Drive backup disabled"
+        viewModelScope.launch { _toastEvent.emit(msg) }
     }
 
     fun toggleAutoLocalBackup(enabled: Boolean) {

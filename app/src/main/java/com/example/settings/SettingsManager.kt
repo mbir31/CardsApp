@@ -28,6 +28,7 @@ class SettingsManager(context: Context) {
             OcrEngineMode.AUTO
         }
         val driveBackup = prefs.getBoolean(KEY_DRIVE_BACKUP, false)
+        val dailyDriveBackup = prefs.getBoolean(KEY_DAILY_DRIVE_BACKUP, true)
         val lastSync = prefs.getLong(KEY_LAST_SYNC, 0L)
         val isDriveConnected = prefs.getBoolean(KEY_DRIVE_CONNECTED, false)
         val driveAccountEmail = prefs.getString(KEY_DRIVE_EMAIL, null)
@@ -38,6 +39,7 @@ class SettingsManager(context: Context) {
             onlineAiMode = onlineAiMode,
             engineMode = engineMode,
             driveBackupEnabled = driveBackup,
+            dailyDriveBackupEnabled = dailyDriveBackup,
             lastBackupTimestamp = lastSync,
             isDriveConnected = isDriveConnected,
             driveAccountEmail = driveAccountEmail,
@@ -59,6 +61,11 @@ class SettingsManager(context: Context) {
     fun setDriveBackupEnabled(enabled: Boolean) {
         prefs.edit().putBoolean(KEY_DRIVE_BACKUP, enabled).apply()
         _settingsState.value = _settingsState.value.copy(driveBackupEnabled = enabled)
+    }
+
+    fun setDailyDriveBackupEnabled(enabled: Boolean) {
+        prefs.edit().putBoolean(KEY_DAILY_DRIVE_BACKUP, enabled).apply()
+        _settingsState.value = _settingsState.value.copy(dailyDriveBackupEnabled = enabled)
     }
 
     fun setDriveConnected(connected: Boolean, email: String? = "mbr.uhq@gmail.com") {
@@ -93,6 +100,7 @@ class SettingsManager(context: Context) {
         private const val KEY_ONLINE_AI_MODE = "online_ai_mode"
         private const val KEY_ENGINE_MODE = "ocr_engine_mode"
         private const val KEY_DRIVE_BACKUP = "drive_backup_enabled"
+        private const val KEY_DAILY_DRIVE_BACKUP = "daily_drive_backup_enabled"
         private const val KEY_LAST_SYNC = "last_backup_timestamp"
         private const val KEY_DRIVE_CONNECTED = "drive_connected"
         private const val KEY_DRIVE_EMAIL = "drive_account_email"

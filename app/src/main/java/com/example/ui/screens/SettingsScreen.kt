@@ -87,6 +87,7 @@ fun SettingsScreen(
     onConnectDrive: () -> Unit,
     onDisconnectDrive: () -> Unit,
     onToggleDriveBackup: (Boolean) -> Unit,
+    onToggleDailyDriveBackup: (Boolean) -> Unit = {},
     onBackupNow: () -> Unit,
     onRestoreNow: () -> Unit,
     onToggleAutoLocalBackup: (Boolean) -> Unit,
@@ -196,6 +197,67 @@ fun SettingsScreen(
                             modifier = Modifier.testTag("drive_backup_switch")
                         )
                     }
+                }
+
+                Spacer(modifier = Modifier.height(14.dp))
+
+                // Automatic Daily Backup Row
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(DarkSurfaceVariant.copy(alpha = 0.5f))
+                        .padding(12.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(modifier = Modifier.weight(1f).padding(end = 8.dp)) {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Icon(
+                                imageVector = Icons.Default.Backup,
+                                contentDescription = null,
+                                tint = IndigoPrimary,
+                                modifier = Modifier.size(16.dp)
+                            )
+                            Spacer(modifier = Modifier.width(6.dp))
+                            Text(
+                                text = "Automatic Daily Backup",
+                                style = MaterialTheme.typography.bodyMedium.copy(
+                                    color = TextPrimary,
+                                    fontWeight = FontWeight.Bold
+                                )
+                            )
+                        }
+                        Spacer(modifier = Modifier.height(2.dp))
+                        Text(
+                            text = "Backs up contact database daily to Google Drive to protect against device loss.",
+                            style = MaterialTheme.typography.bodySmall.copy(
+                                color = TextMuted,
+                                fontSize = 11.sp
+                            )
+                        )
+                        if (settings.dailyDriveBackupEnabled) {
+                            Spacer(modifier = Modifier.height(4.dp))
+                            Text(
+                                text = "Schedule: Every 24 hours at 02:00 AM",
+                                style = MaterialTheme.typography.labelSmall.copy(
+                                    color = EmeraldOnline,
+                                    fontWeight = FontWeight.SemiBold,
+                                    fontSize = 10.sp
+                                )
+                            )
+                        }
+                    }
+
+                    Switch(
+                        checked = settings.dailyDriveBackupEnabled,
+                        onCheckedChange = onToggleDailyDriveBackup,
+                        colors = SwitchDefaults.colors(
+                            checkedThumbColor = Color.White,
+                            checkedTrackColor = IndigoPrimary
+                        ),
+                        modifier = Modifier.testTag("daily_drive_backup_switch")
+                    )
                 }
 
                 Spacer(modifier = Modifier.height(14.dp))

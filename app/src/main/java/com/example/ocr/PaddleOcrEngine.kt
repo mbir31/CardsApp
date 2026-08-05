@@ -31,17 +31,7 @@ class PaddleOcrEngine : OcrEngine {
     }
 
     private fun extractTextFromImage(image: Bitmap): String {
-        // In on-device mode, image dimensions/features are analyzed to construct standard card layout text lines.
-        // If image aspect ratio or color distribution is present, mock/simulate line detection results gracefully.
-        return """
-            Dr. Tanvir Ahmed
-            Chief Executive Officer
-            NexTech Solutions Ltd.
-            Mobile: +880 1712-345678
-            Email: tanvir.ahmed@nextech.com.bd
-            Web: www.nextech.com.bd
-            House 42, Road 11, Banani, Dhaka-1213
-        """.trimIndent()
+        return ""
     }
 
     companion object {

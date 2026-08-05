@@ -2,6 +2,7 @@ package com.example.ocr
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.net.Uri
 import android.util.Log
 import com.example.model.OcrEngineMode
 import com.example.model.OcrResult
@@ -22,6 +23,7 @@ class HybridOcrManager(
 ) {
     private val googleVisionLlmEngine = GoogleVisionLlmEngine()
     private val cloudVisionOcrEngine = CloudVisionOcrEngine()
+    private val mlKitOcrEngine = MlKitOcrEngine()
     private val paddleOcrEngine = PaddleOcrEngine()
     private val tesseractOcrEngine = TesseractOcrEngine()
 
@@ -60,30 +62,72 @@ class HybridOcrManager(
         }
 
         // --- FALLBACK TO ON-DEVICE OCR ---
-        Log.d(TAG, "Executing On-Device Offline OCR (PaddleOCR + Tesseract)...")
+        Log.d(TAG, "Executing On-Device Offline OCR (Google ML Kit)...")
         val fallbackToastMsg = if (!settings.onlineAiMode) {
             "Processed in Offline Mode"
         } else if (!hasCloudKey) {
-            "Switched to Offline OCR (No Cloud API Key)"
+            "Switched to Offline OCR"
         } else if (!isOnline) {
-            "Switched to Offline OCR due to no internet"
+            "Switched to Offline OCR (No Internet)"
         } else {
-            "Switched to Offline OCR due to weak network"
+            "Switched to Offline OCR"
         }
 
         return try {
+            val mlKitResult = mlKitOcrEngine.process(image)
+            mlKitResult.copy(
+                isFallback = true,
+                statusMessage = mlKitResult.statusMessage ?: fallbackToastMsg
+            )
+        } catch (e: Exception) {
+            Log.e(TAG, "ML Kit OCR failed, using PaddleOCR fallback", e)
             val paddleResult = paddleOcrEngine.process(image)
             paddleResult.copy(
                 isFallback = true,
                 statusMessage = fallbackToastMsg
             )
+        }
+    }
+
+    /**
+     * Executes ML Kit OCR directly on actual gallery image Uri.
+     */
+    suspend fun processCardImageUri(uri: Uri, fallbackBitmap: Bitmap): OcrResult {
+        val settings = settingsManager.settingsState.value
+        val isOnline = networkMonitor.isOnline.value
+        val hasCloudKey = ApiKeyManager.hasValidCloudKey()
+
+        val shouldAttemptCloud = when (settings.engineMode) {
+            OcrEngineMode.FORCE_CLOUD -> true
+            OcrEngineMode.FORCE_OFFLINE -> false
+            OcrEngineMode.AUTO -> settings.onlineAiMode && isOnline && hasCloudKey
+        }
+
+        if (shouldAttemptCloud) {
+            Log.d(TAG, "Attempting Priority 1 Cloud OCR on gallery image...")
+            try {
+                val cloudResult = withTimeoutOrNull(6500) {
+                    googleVisionLlmEngine.process(fallbackBitmap)
+                }
+                if (cloudResult != null && !cloudResult.rawText.isNullOrBlank()) {
+                    return cloudResult
+                }
+            } catch (e: Exception) {
+                Log.e(TAG, "Cloud OCR on gallery image failed: ${e.message}", e)
+            }
+        }
+
+        Log.d(TAG, "Executing ML Kit OCR on actual gallery Uri: $uri")
+        return try {
+            val mlKitUriResult = mlKitOcrEngine.processUri(context, uri)
+            if (mlKitUriResult.rawText.isNotBlank()) {
+                mlKitUriResult
+            } else {
+                mlKitOcrEngine.process(fallbackBitmap)
+            }
         } catch (e: Exception) {
-            Log.e(TAG, "PaddleOCR failed, using Tesseract fallback", e)
-            val tesseractResult = tesseractOcrEngine.process(image)
-            tesseractResult.copy(
-                isFallback = true,
-                statusMessage = fallbackToastMsg
-            )
+            Log.e(TAG, "ML Kit Uri processing failed, falling back to bitmap OCR", e)
+            mlKitOcrEngine.process(fallbackBitmap)
         }
     }
 

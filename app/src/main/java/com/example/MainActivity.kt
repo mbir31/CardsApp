@@ -172,6 +172,7 @@ fun CardsAppMainScreen(viewModel: MainViewModel) {
                         onlineAiMode = settingsState.onlineAiMode,
                         isOnline = isOnline,
                         onCaptureCard = { bitmap -> viewModel.processCapturedCard(bitmap) },
+                        onGallerySelect = { uri, bitmap -> viewModel.processGalleryCard(uri, bitmap) },
                         onRunSampleScan = { viewModel.runSampleCardScan() }
                     )
                 }
@@ -209,6 +210,7 @@ fun CardsAppMainScreen(viewModel: MainViewModel) {
                         onConnectDrive = { viewModel.connectGoogleDrive() },
                         onDisconnectDrive = { viewModel.disconnectGoogleDrive() },
                         onToggleDriveBackup = { viewModel.toggleDriveBackup(it) },
+                        onToggleDailyDriveBackup = { viewModel.toggleDailyDriveBackup(it) },
                         onBackupNow = { viewModel.triggerBackupNow() },
                         onRestoreNow = { viewModel.triggerRestoreNow() },
                         onToggleAutoLocalBackup = { viewModel.toggleAutoLocalBackup(it) },

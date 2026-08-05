@@ -31,9 +31,6 @@ class GoogleVisionLlmEngine : OcrEngine {
         val scaledBitmap = scaleBitmapIfNeeded(image, 1200)
         val base64Image = bitmapToBase64(scaledBitmap)
 
-        // 2. Prepare model endpoint (using gemini-3.1-pro-preview as specified)
-        val endpointUrl = "https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-pro-preview:generateContent?key=$apiKey"
-
         val prompt = """
             You are an expert OCR and document structure extraction AI. Analyze this image of a business card (which may contain English, Bangla, or both).
             Extract the following fields accurately. If name or company name is in Bangla or non-English script, provide the English phonetic transliteration/translation (e.g., 'Ariful Islam' for 'আরিফুল ইসলাম'). Every name and company field must be returned in clear, readable English script.
@@ -52,6 +49,25 @@ class GoogleVisionLlmEngine : OcrEngine {
             }
             Do not include Markdown backticks around JSON if possible, or return raw JSON directly.
         """.trimIndent()
+
+        // 2. Prepare model endpoint (using gemini-2.5-flash / gemini-1.5-flash)
+        val modelsToTry = listOf("gemini-2.5-flash", "gemini-1.5-flash", "gemini-2.0-flash")
+        var lastException: Exception? = null
+
+        for (modelName in modelsToTry) {
+            val endpointUrl = "https://generativelanguage.googleapis.com/v1beta/models/$modelName:generateContent?key=$apiKey"
+            try {
+                return@withContext executeApiCall(endpointUrl, base64Image, prompt)
+            } catch (e: Exception) {
+                Log.w(TAG, "Model $modelName failed: ${e.message}. Trying fallback model if available...")
+                lastException = e
+            }
+        }
+        throw lastException ?: IllegalStateException("All Gemini models failed")
+    }
+
+    private fun executeApiCall(endpointUrl: String, base64Image: String, prompt: String): OcrResult {
+        // Build JSON request payload
 
         // Build JSON request payload
         val requestJson = JSONObject().apply {
@@ -100,7 +116,7 @@ class GoogleVisionLlmEngine : OcrEngine {
             val responseCode = connection.responseCode
             if (responseCode == HttpURLConnection.HTTP_OK) {
                 val responseText = connection.inputStream.bufferedReader().use { it.readText() }
-                parseGeminiResponse(responseText)
+                return parseGeminiResponse(responseText)
             } else {
                 val errorStream = connection.errorStream?.bufferedReader()?.use { it.readText() }
                 Log.e(TAG, "Gemini API HTTP Error $responseCode: $errorStream")

@@ -87,6 +87,7 @@ fun ScanScreen(
     onlineAiMode: Boolean,
     isOnline: Boolean,
     onCaptureCard: (Bitmap) -> Unit,
+    onGallerySelect: (Uri, Bitmap) -> Unit = { _, bitmap -> onCaptureCard(bitmap) },
     onRunSampleScan: () -> Unit,
     modifier: Modifier = Modifier
 ) {
@@ -202,7 +203,7 @@ fun ScanScreen(
             try {
                 val bitmap = decodeAndOrientUri(selectedUri)
                 if (bitmap != null) {
-                    onCaptureCard(bitmap)
+                    onGallerySelect(selectedUri, bitmap)
                 } else {
                     Toast.makeText(context, "Failed to decode image from gallery", Toast.LENGTH_SHORT).show()
                 }
@@ -254,32 +255,7 @@ fun ScanScreen(
             .padding(horizontal = 14.dp, vertical = 6.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Top Bar Flash Option
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.End,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            IconButton(
-                onClick = { isFlashOn = !isFlashOn },
-                modifier = Modifier
-                    .size(36.dp)
-                    .clip(CircleShape)
-                    .background(if (isFlashOn) IndigoPrimary else DarkSurface)
-                    .testTag("flash_toggle_button")
-            ) {
-                Icon(
-                    imageVector = Icons.Default.FlashOn,
-                    contentDescription = "Flash",
-                    tint = if (isFlashOn) Color.White else TextMuted,
-                    modifier = Modifier.size(18.dp)
-                )
-            }
-        }
-
-        Spacer(modifier = Modifier.height(6.dp))
-
-        // Brief Professional Instruction Diagram Card
+        // Brief Professional Instruction Diagram Card (with Flash Toggle in Header)
         Card(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(14.dp),
@@ -288,23 +264,45 @@ fun ScanScreen(
         ) {
             Column(modifier = Modifier.padding(8.dp)) {
                 Row(
+                    modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.spacedBy(6.dp)
+                    horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Icon(
-                        imageVector = Icons.Default.Info,
-                        contentDescription = null,
-                        tint = IndigoPrimary,
-                        modifier = Modifier.size(14.dp)
-                    )
-                    Text(
-                        text = "Optimal Scanning Guidelines",
-                        style = MaterialTheme.typography.labelMedium.copy(
-                            color = TextPrimary,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 11.sp
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(6.dp)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Info,
+                            contentDescription = null,
+                            tint = IndigoPrimary,
+                            modifier = Modifier.size(14.dp)
                         )
-                    )
+                        Text(
+                            text = "Optimal Scanning Guidelines",
+                            style = MaterialTheme.typography.labelMedium.copy(
+                                color = TextPrimary,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 11.sp
+                            )
+                        )
+                    }
+
+                    IconButton(
+                        onClick = { isFlashOn = !isFlashOn },
+                        modifier = Modifier
+                            .size(28.dp)
+                            .clip(CircleShape)
+                            .background(if (isFlashOn) IndigoPrimary else DarkBackground)
+                            .testTag("flash_toggle_button")
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.FlashOn,
+                            contentDescription = "Flash",
+                            tint = if (isFlashOn) Color.White else TextMuted,
+                            modifier = Modifier.size(15.dp)
+                        )
+                    }
                 }
 
                 Spacer(modifier = Modifier.height(6.dp))

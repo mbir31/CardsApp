@@ -37,6 +37,7 @@ data class OcrSettings(
     val onlineAiMode: Boolean = true,
     val engineMode: OcrEngineMode = OcrEngineMode.AUTO,
     val driveBackupEnabled: Boolean = false,
+    val dailyDriveBackupEnabled: Boolean = true,
     val lastBackupTimestamp: Long = 0L,
     val isDriveConnected: Boolean = false,
     val driveAccountEmail: String? = null,
