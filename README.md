@@ -1,4 +1,5 @@
 # 📇 CardsApp — AI Business Card Scanner & Smart Contact Manager
+### 🇧🇩 🇬🇧 স্মার্ট বিজনেস কার্ড স্ক্যানার ও এআই কন্টাক্ট ম্যানেজার
 
 [![Kotlin](https://img.shields.io/badge/Language-Kotlin-7F52FF.svg?style=flat&logo=kotlin)](https://kotlinlang.org/)
 [![Jetpack Compose](https://img.shields.io/badge/UI-Jetpack%20Compose%20(M3)-4285F4.svg?style=flat&logo=android)](https://developer.android.com/jetpack/compose)
@@ -8,123 +9,89 @@
 
 ---
 
-### 💼 *Tired of a wallet stuffed with physical business cards?*
-> **Transform your bulky wallet into an organized, digital business contact vault!**  
-> **CardsApp** lets you digitize, organize, search, and export physical business cards in seconds. Scan cards on the go, automatically extract contact info using high-precision Multilingual AI OCR, and save them straight to your phone's address book with a single tap.
+> ### 💼 *বিজনেস কার্ডের পাহাড়ে হারিয়ে যাচ্ছেন? (Struggling with paper business cards?)*
+> **এখনই আপনার ম্যানুয়াল মানিব্যাগকে ডিজিটাল স্মার্ট ভল্টে রূপান্তর করুন!**  
+> **CardsApp** is a professional-grade AI business card scanner that converts physical cards into digital contacts in seconds. Powered by high-accuracy **Multilingual AI OCR (Bangla + English support)**, offline Room database vault, 1-click Google Drive Cloud Backup, and seamless Phone Contacts sync!
 
 ---
 
-## 🔥 Key Features & Capabilities
+## ✨ Highlights & Key Features (প্রধান আকর্ষণসমূহ)
 
-### 🧠 1. Hybrid Multilingual AI OCR Engine
-* **Offline-First Speed + AI Accuracy**: Instant local text extraction via **Google ML Kit**, coupled with optional cloud AI enhancement using **Gemini 3.1 Pro / Flash**.
-* **Multilingual Recognition**: Full support for complex multilingual business cards including **Bangla (বাংলা)**, English, Spanish, French, German, Japanese, and more.
-* **Smart Field Extraction**: Automatically parses:
-  * 👤 Full Name & Professional Title
-  * 🏢 Company & Organization Name
-  * 📞 Phone Numbers & WhatsApp contacts
-  * ✉️ Email Addresses
-  * 🌐 Websites & Social Links
-  * 📍 Physical Addresses
+### 🤖 1. AI OCR & Multilingual Scanning (স্মার্ট এআই স্ক্যানার)
+* **Bangla & English Accuracy (বাংলা ও ইংরেজি স্ক্যান)**: Advanced hybrid OCR with **Google ML Kit** and **Gemini AI** accurately extracts text from both English and Bengali business cards.
+* **Auto Field Parsing (স্বয়ংক্রিয় তথ্য সংগ্রহ)**: Automatically extracts Name, Job Title, Company, Mobile Numbers, Email, Website, and Address into organized contact fields.
+* **Auto Auto-Crop & High-Res Capture**: High-definition camera integration with automatic perspective orientation fix.
 
 ---
 
-### 📤 2. Comprehensive Export & 1-Tap Sharing Suite
-Never get caught without a way to share contacts. Every card in your vault can be exported or shared in multiple industry-standard formats:
-
-| Format | Description & Use Case |
-| :--- | :--- |
-| 📱 **Phone Contacts Sync** | 1-tap direct integration to your native Android System Phone Book (`ContactsContract`). |
-| 🔳 **Dynamic QR Code** | Generates an instant, high-contrast QR code scannable by *any* mobile camera for instant import. |
-| 🎴 **vCard (.vcf)** | Export standard contact files compatible with iOS, Android, Gmail, Outlook, and Apple Contacts. |
-| 📊 **CSV Export (.csv)** | Export structured spreadsheet records ideal for Excel, Google Sheets, or CRM databases. |
-| 📷 **Scanned Card Image** | Share clean, high-resolution original card images for visual reference. |
+### 📱 2. Seamless Phone Contacts Integration (ফোনে ডায়রেক্ট সেভ)
+* **Direct Address Book Save**: Save scanned cards directly to your phone's native address book (`ContactsContract`) in 1 tap.
+* **One-Tap Dial & Email**: Launch direct calls, WhatsApp chats, send emails, or open company office addresses on Google Maps straight from the app.
 
 ---
 
-### 📂 3. Smart Vault & Organization
-* **Category Tagging**: Filter contacts by custom categories (*Professional*, *Office*, *Business*, *Family*, *Personal*).
-* **Starred Priority Contacts**: Bookmark key leads, executives, and clients for instant access.
-* **Instant Instant Search**: Search through names, companies, job titles, or emails instantly.
-* **Direct Quick Actions**: Initiate calls, launch email clients, open company websites, or view office locations on Google Maps with a single touch.
+### ☁️ 3. Google Drive Backup & Cloud Sync (গুগল ড্রাইভ ক্লাউড ব্যাকআপ)
+* **Never Lose a Contact**: Securely backup your entire digital card vault to your personal Google Drive account with 1 click.
+* **Instant Restore**: Seamlessly restore all cards when switching to a new Android phone.
 
 ---
 
-## 📱 User Manual & Usage Guide
+### 📤 4. Smart Sharing & Export Suite (১-ট্যাপে শেয়ার ও এক্সপোর্ট)
+* 🔳 **Dynamic QR Code Generator**: Generate scannable vCard QR codes to share contact details instantly without typing.
+* 🎴 **vCard Export (.vcf)**: Standard vCard file export compatible with Android, iPhone, Gmail, and Outlook.
+* 📊 **CSV Export (.csv)**: Export full spreadsheet databases for CRM or Excel.
+* 📷 **Image Sharing**: Share original scanned business card pictures.
+
+---
+
+### 🗂️ 5. Smart Vault & Organization (স্মার্ট ডিজিটাল ভল্ট)
+* **Categories & Tagging**: Filter cards by *Professional*, *Office*, *Business*, *Family*, or *Personal*.
+* **Starred Favorites**: Pin key leads, top executives, and urgent clients for instant access.
+* **Lightning Fast Search**: Find any contact by name, company, title, or keyword instantly.
+
+---
+
+## 🚀 How It Works (ব্যবহার পদ্ধতি)
 
 ```
-┌─────────────────┐     ┌──────────────────┐     ┌──────────────────┐     ┌──────────────────┐
-│   1. Capture    │ ──> │   2. AI Review   │ ──> │ 3. Vault Storage │ ──> │ 4. Export / Sync │
-│ Camera / Gallery│     │ Verify & Edit    │     │ Search & Filter  │     │ vCard/QR/System  │
-└─────────────────┘     └──────────────────┘     └──────────────────┘     └──────────────────┘
+┌──────────────────┐     ┌──────────────────┐     ┌──────────────────┐     ┌──────────────────┐
+## 1. Capture/Scan │ ──> │ 2. AI OCR Review │ ──> │ 3. Smart Vault   │ ──> │ 4. Export & Sync │
+│ Camera / Gallery │     │ Verify & Edit    │     │ Search & Filter  │     │ Phone/vCard/Drive│
+└──────────────────┘     └──────────────────┘     └──────────────────┘     └──────────────────┘
 ```
 
-### Step 1: Scan or Upload a Business Card
-1. Open **CardsApp** and tap the **Scan Card** tab.
-2. Position the business card within the camera viewport framing box and tap **Capture**, or tap **Gallery** to select an existing photo.
-
-### Step 2: AI OCR Extraction & Review
-1. The AI engine automatically extracts all contact details.
-2. Review the structured fields (Name, Title, Company, Phone, Email, Address).
-3. Optionally select a target **Category** or mark the contact as **Starred**.
-4. Tap **Save to Vault** or **Save & Add to System Contacts**.
-
-### Step 3: Manage & Search Your Vault
-1. Navigate to the **Vault** tab to view your complete digital card collection.
-2. Use the **Search bar** to find contacts by name, company, or job title.
-3. Tap on any card category pill to filter your vault list.
-
-### Step 4: Share & Export Contacts
-1. Tap any card in the Vault to open the **Card Details** screen.
-2. Choose your preferred export option:
-   * **Save / Edit on Phone Contacts**: Saves the contact directly into your native phone address book.
-   * **QR Code**: Displays a scannable QR Code modal with a 1-tap share image option.
-   * **vCard**: Shares a `.vcf` file directly via WhatsApp, Email, or Drive.
-   * **CSV**: Generates a `.csv` data table.
-   * **Image**: Shares the captured physical card photo.
+1. **Scan Card (কার্ড স্ক্যান করুন)**: Open the Scan tab and capture a photo or pick one from your gallery.
+2. **AI Processing (এআই প্রসেসিং)**: The app automatically detects name, phone, email, and company details.
+3. **Save & Sync (সেভ করুন)**: Store in your local encrypted Room Vault and sync to your Phone Contacts with a single tap.
+4. **Share Anywhere (শেয়ার করুন)**: Generate QR codes or share vCard/CSV files instantly!
 
 ---
 
-## 🛠 Tech Stack & Architecture
+## 🛠 Tech Stack & Architecture (প্রযুক্তি ও আর্কিটেকচার)
 
-* **Language**: [Kotlin](https://kotlinlang.org/) (100% modern idiomatic Kotlin)
-* **UI Framework**: [Jetpack Compose](https://developer.android.com/jetpack/compose) with Material Design 3 (M3 Dark Palette)
-* **Architecture**: MVVM (Model-View-ViewModel) with Unidirectional Data Flow (StateFlow / SharedFlow)
-* **Database**: [Room Database](https://developer.android.com/training/data-storage/room) (Offline-First local storage)
-* **OCR & AI**:
-  * [Google ML Kit Text Recognition](https://developers.google.com/ml-kit/vision/text-recognition)
-  * [Google Gemini AI Vision API](https://ai.google.dev/)
-* **QR Generation**: [ZXing Core](https://github.com/zxing/zxing)
-* **Image Loading**: [Coil Compose](https://coil-kt.github.io/coil/)
+* **Language**: [Kotlin](https://kotlinlang.org/) (100% Modern Idiomatic Code)
+* **UI Framework**: [Jetpack Compose](https://developer.android.com/jetpack/compose) with Material Design 3 (M3 Dark Canvas)
+* **Architecture**: MVVM + Clean Architecture with Coroutines & StateFlow
+* **Database**: [Room Database](https://developer.android.com/training/data-storage/room) (Offline-First)
+* **OCR & AI Engine**: Google ML Kit Vision + Gemini AI Vision
+* **Cloud Sync**: Google Drive API Integration
+* **Barcode & QR**: ZXing Engine
 
 ---
 
-## 🚀 Getting Started for Developers
+## 📱 Quick Setup for Developers (ডেভেলপার গাইড)
 
-### Prerequisites
-* Android Studio Ladybug (2024.2.1+) or newer
-* JDK 17+
-* Android SDK 24+ (Android 7.0 Nougat minimum)
+```bash
+# Clone the repository
+git clone https://github.com/your-username/CardsApp.git
 
-### Build & Run
-1. **Clone the repository**:
-   ```bash
-   git clone https://github.com/your-username/CardsApp.git
-   cd CardsApp
-   ```
-2. **Open in Android Studio**:
-   Open the project directory in Android Studio and let Gradle sync.
-3. **Build & Run**:
-   Select your connected device or emulator and click **Run** (`Shift + F10`).
+# Open in Android Studio Ladybug (2024.2.1+)
+# Build and run on device or emulator
+```
 
 ---
 
-## 🛡 License
-
-Distributed under the MIT License. See `LICENSE` for more information.
-
----
-
-<p center="align">
-Made with ❤️ using Kotlin & Jetpack Compose.
+<p align="center">
+  <b>CardsApp</b> — Your Ultimate AI Business Card Assistant! 🚀<br>
+  Made with ❤️ using Kotlin & Jetpack Compose.
 </p>

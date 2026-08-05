@@ -1,6 +1,16 @@
 package com.example.ui.screens
 
+import android.Manifest
+import android.content.Context
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.Matrix
+import android.media.ExifInterface
+import android.net.Uri
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -51,10 +61,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import com.example.ui.theme.DarkBackground
 import com.example.ui.theme.DarkBorder
 import com.example.ui.theme.DarkSurface
@@ -63,6 +76,10 @@ import com.example.ui.theme.IndigoPrimary
 import com.example.ui.theme.TextMuted
 import com.example.ui.theme.TextPrimary
 import com.example.ui.theme.TextSecondary
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @Composable
 fun ScanScreen(
@@ -73,7 +90,162 @@ fun ScanScreen(
     onRunSampleScan: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val context = LocalContext.current
     var isFlashOn by remember { mutableStateOf(false) }
+    var tempPhotoFile by remember { mutableStateOf<File?>(null) }
+
+    fun decodeAndOrientFile(file: File): Bitmap? {
+        return try {
+            val boundsOptions = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+            BitmapFactory.decodeFile(file.absolutePath, boundsOptions)
+            var sampleSize = 1
+            val maxDim = maxOf(boundsOptions.outWidth, boundsOptions.outHeight)
+            if (maxDim > 2048) {
+                sampleSize = (maxDim / 2048).coerceAtLeast(1)
+            }
+            val decodeOptions = BitmapFactory.Options().apply { inSampleSize = sampleSize }
+            val decoded = BitmapFactory.decodeFile(file.absolutePath, decodeOptions) ?: return null
+
+            val exif = ExifInterface(file.absolutePath)
+            val orientation = exif.getAttributeInt(
+                ExifInterface.TAG_ORIENTATION,
+                ExifInterface.ORIENTATION_NORMAL
+            )
+            val matrix = Matrix()
+            when (orientation) {
+                ExifInterface.ORIENTATION_ROTATE_90 -> matrix.postRotate(90f)
+                ExifInterface.ORIENTATION_ROTATE_180 -> matrix.postRotate(180f)
+                ExifInterface.ORIENTATION_ROTATE_270 -> matrix.postRotate(270f)
+                else -> return decoded
+            }
+            Bitmap.createBitmap(decoded, 0, 0, decoded.width, decoded.height, matrix, true)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            try { BitmapFactory.decodeFile(file.absolutePath) } catch (ex: Exception) { null }
+        }
+    }
+
+    fun decodeAndOrientUri(uri: Uri): Bitmap? {
+        return try {
+            val boundsOptions = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+            context.contentResolver.openInputStream(uri)?.use { stream ->
+                BitmapFactory.decodeStream(stream, null, boundsOptions)
+            }
+            var sampleSize = 1
+            val maxDim = maxOf(boundsOptions.outWidth, boundsOptions.outHeight)
+            if (maxDim > 2048) {
+                sampleSize = (maxDim / 2048).coerceAtLeast(1)
+            }
+            val decodeOptions = BitmapFactory.Options().apply { inSampleSize = sampleSize }
+            val decoded = context.contentResolver.openInputStream(uri)?.use { stream ->
+                BitmapFactory.decodeStream(stream, null, decodeOptions)
+            } ?: return null
+
+            val orientation = context.contentResolver.openInputStream(uri)?.use { stream ->
+                val exif = ExifInterface(stream)
+                exif.getAttributeInt(
+                    ExifInterface.TAG_ORIENTATION,
+                    ExifInterface.ORIENTATION_NORMAL
+                )
+            } ?: ExifInterface.ORIENTATION_NORMAL
+
+            val matrix = Matrix()
+            when (orientation) {
+                ExifInterface.ORIENTATION_ROTATE_90 -> matrix.postRotate(90f)
+                ExifInterface.ORIENTATION_ROTATE_180 -> matrix.postRotate(180f)
+                ExifInterface.ORIENTATION_ROTATE_270 -> matrix.postRotate(270f)
+                else -> return decoded
+            }
+            Bitmap.createBitmap(decoded, 0, 0, decoded.width, decoded.height, matrix, true)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            try {
+                context.contentResolver.openInputStream(uri)?.use { stream ->
+                    BitmapFactory.decodeStream(stream)
+                }
+            } catch (ex: Exception) { null }
+        }
+    }
+
+    // High-Res Camera TakePicture launcher
+    val takePictureLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.TakePicture()
+    ) { success ->
+        if (success) {
+            tempPhotoFile?.let { file ->
+                if (file.exists()) {
+                    val bitmap = decodeAndOrientFile(file)
+                    if (bitmap != null) {
+                        onCaptureCard(bitmap)
+                    } else {
+                        Toast.makeText(context, "Could not load captured photo", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+    }
+
+    // Fallback Camera Preview Launcher
+    val takePicturePreviewLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.TakePicturePreview()
+    ) { bitmap ->
+        if (bitmap != null) {
+            onCaptureCard(bitmap)
+        }
+    }
+
+    // Gallery Image Picker Launcher
+    val galleryLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        uri?.let { selectedUri ->
+            try {
+                val bitmap = decodeAndOrientUri(selectedUri)
+                if (bitmap != null) {
+                    onCaptureCard(bitmap)
+                } else {
+                    Toast.makeText(context, "Failed to decode image from gallery", Toast.LENGTH_SHORT).show()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(context, "Error opening gallery image: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    fun launchCamera() {
+        try {
+            val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+            val file = File.createTempFile("CARD_${timeStamp}_", ".jpg", context.cacheDir)
+            tempPhotoFile = file
+            val photoUri = FileProvider.getUriForFile(context, "com.aistudio.cardsapp.scanner.fileprovider", file)
+            takePictureLauncher.launch(photoUri)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            // Fallback to TakePicturePreview if file creation fails
+            takePicturePreviewLauncher.launch(null)
+        }
+    }
+
+    // Runtime Camera Permission Launcher
+    val cameraPermissionLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            launchCamera()
+        } else {
+            Toast.makeText(context, "Camera permission is required to scan physical business cards", Toast.LENGTH_LONG).show()
+        }
+    }
+
+    fun handleCameraClick() {
+        val permissionCheck = ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA)
+        if (permissionCheck == PackageManager.PERMISSION_GRANTED) {
+            launchCamera()
+        } else {
+            cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
+        }
+    }
 
     Column(
         modifier = modifier
@@ -82,31 +254,12 @@ fun ScanScreen(
             .padding(horizontal = 14.dp, vertical = 6.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        // Header info
+        // Top Bar Flash Option
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
+            horizontalArrangement = Arrangement.End,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Column {
-                Text(
-                    text = "ALIGN CARD IN FRAME",
-                    style = MaterialTheme.typography.labelSmall.copy(
-                        color = IndigoPrimary,
-                        fontWeight = FontWeight.Bold,
-                        letterSpacing = 1.sp,
-                        fontSize = 10.sp
-                    )
-                )
-                Text(
-                    text = "Physical Card Scanner",
-                    style = MaterialTheme.typography.titleMedium.copy(
-                        color = TextPrimary,
-                        fontWeight = FontWeight.Bold
-                    )
-                )
-            }
-
             IconButton(
                 onClick = { isFlashOn = !isFlashOn },
                 modifier = Modifier
@@ -275,6 +428,7 @@ fun ScanScreen(
                     )
                 )
                 .border(2.dp, IndigoPrimary.copy(alpha = 0.5f), RoundedCornerShape(20.dp))
+                .clickable(enabled = !isScanning) { handleCameraClick() }
                 .padding(12.dp),
             contentAlignment = Alignment.Center
         ) {
@@ -356,7 +510,7 @@ fun ScanScreen(
                     )
                     Spacer(modifier = Modifier.height(6.dp))
                     Text(
-                        text = "Position Card Within Corners",
+                        text = "Tap or Click Below to Open Camera",
                         style = MaterialTheme.typography.bodyMedium.copy(
                             color = Color.White,
                             fontWeight = FontWeight.SemiBold
@@ -384,7 +538,7 @@ fun ScanScreen(
         ) {
             // Main Camera Capture Button
             Button(
-                onClick = onRunSampleScan,
+                onClick = { handleCameraClick() },
                 enabled = !isScanning,
                 shape = RoundedCornerShape(20.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = IndigoPrimary),
@@ -442,7 +596,7 @@ fun ScanScreen(
                 }
 
                 Button(
-                    onClick = onRunSampleScan,
+                    onClick = { galleryLauncher.launch("image/*") },
                     enabled = !isScanning,
                     shape = RoundedCornerShape(16.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = DarkSurface),

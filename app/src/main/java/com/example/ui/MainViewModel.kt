@@ -246,7 +246,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
             if (success) {
                 _toastEvent.emit("Saved contact to Phone Contacts!")
             } else {
-                _toastEvent.emit("Opened system contacts menu")
+                try {
+                    val intent = ContactsHelper.createAddContactIntent(result)
+                    context.startActivity(intent)
+                    _toastEvent.emit("Opened System Phone Contacts screen")
+                } catch (e: Exception) {
+                    _toastEvent.emit("Opened system contacts menu")
+                }
             }
             lastSavedVaultCard?.let { card ->
                 cardDao.updateCard(card.copy(isSyncedToContacts = true))
@@ -298,7 +304,13 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
                 if (success) {
                     _toastEvent.emit("Saved contact to Phone Contacts!")
                 } else {
-                    _toastEvent.emit("Opened system contacts menu")
+                    try {
+                        val intent = ContactsHelper.createAddContactIntent(result)
+                        context.startActivity(intent)
+                        _toastEvent.emit("Opened System Phone Contacts screen")
+                    } catch (e: Exception) {
+                        _toastEvent.emit("Opened system contacts menu")
+                    }
                 }
             }
 
