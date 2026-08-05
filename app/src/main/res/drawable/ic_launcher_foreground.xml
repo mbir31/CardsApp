@@ -1,27 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
     android:width="108dp"
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-    <!-- Outer Card Shadow & Container -->
+
+    <!-- BACK CARD (Card 1 - Rose / Violet Accent) -->
     <path
-        android:fillColor="#0284C7"
-        android:pathData="M24,32 h60 a6,6 0 0,1 6,6 v32 a6,6 0 0,1 -6,6 h-60 a6,6 0 0,1 -6,-6 v-32 a6,6 0 0,1 6,-6 z" />
-    <!-- Card Inner Face -->
+        android:pathData="M22,30 h52 a5,5 0 0,1 5,5 v30 a5,5 0 0,1 -5,5 h-52 a5,5 0 0,1 -5,-5 v-30 a5,5 0 0,1 5,-5 z"
+        android:fillColor="#818CF8" />
     <path
-        android:fillColor="#38BDF8"
-        android:pathData="M27,35 h54 a4,4 0 0,1 4,4 v26 a4,4 0 0,1 -4,4 h-54 a4,4 0 0,1 -4,-4 v-26 a4,4 0 0,1 4,-4 z" />
-    <!-- Avatar circle on card -->
+        android:pathData="M22,30 h52 a5,5 0 0,1 5,5 v8 h-62 v-8 a5,5 0 0,1 5,-5 z"
+        android:fillColor="#F43F5E" />
+
+    <!-- MIDDLE CARD (Card 2 - Cyan / Emerald Accent) -->
     <path
-        android:fillColor="#FFFFFF"
-        android:pathData="M38,48 a5,5 0 1,0 0,-0.01 Z" />
-    <!-- Card lines -->
+        android:pathData="M32,25 h52 a5,5 0 0,1 5,5 v30 a5,5 0 0,1 -5,5 h-52 a5,5 0 0,1 -5,-5 v-30 a5,5 0 0,1 5,-2.5 z"
+        android:fillColor="#0D9488" />
     <path
-        android:fillColor="#FFFFFF"
-        android:pathData="M48,43 h26 v3 h-26 z M48,49 h20 v2.5 h-20 z M48,54 h15 v2.5 h-15 z" />
-    <!-- AI Scan / Frame corners -->
+        android:pathData="M32,25 h52 a5,5 0 0,1 5,5 v7 h-62 v-7 a5,5 0 0,1 5,-5 z"
+        android:fillColor="#06B6D4" />
+
+    <!-- FRONT MAIN CARD (Card 3 - Royal Indigo & Dark Slate) -->
+    <!-- Base Card Shadow -->
     <path
-        android:fillColor="#F0F9FF"
-        android:pathData="M18,24 h12 v4 h-8 v8 h-4 z M90,24 h-12 v4 h8 v8 h4 z M18,84 h12 v-4 h-8 v-8 h-4 z M90,84 h-12 v-4 h8 v-8 h4 z" />
+        android:pathData="M24,40 h56 a6,6 0 0,1 6,6 v32 a6,6 0 0,1 -6,6 h-56 a6,6 0 0,1 -6,-6 v-32 a6,6 0 0,1 6,-6 z"
+        android:fillColor="#1E1B4B" />
+
+    <!-- Front Card Surface Gradient -->
+    <path
+        android:pathData="M25,41 h54 a5,5 0 0,1 5,5 v30 a5,5 0 0,1 -5,5 h-54 a5,5 0 0,1 -5,-5 v-30 a5,5 0 0,1 5,-5 z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="25"
+                android:startY="41"
+                android:endX="79"
+                android:endY="76"
+                android:type="linear">
+                <item android:offset="0.0" android:color="#4F46E5" />
+                <item android:offset="1.0" android:color="#312E81" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Card Profile Avatar Badge -->
+    <path
+        android:pathData="M37,56 a5.5,5.5 0 1,0 0,-11 a5.5,5.5 0 0,0 0,11 z"
+        android:fillColor="#F8FAFC" />
+    <path
+        android:pathData="M37,53 a2.5,2.5 0 1,0 0,-5 a2.5,2.5 0 0,0 0,5 z"
+        android:fillColor="#6366F1" />
+
+    <!-- Card Contact Info Text Lines -->
+    <path
+        android:pathData="M47,48 h24 v2.5 h-24 z"
+        android:fillColor="#FFFFFF" />
+    <path
+        android:pathData="M47,53 h18 v2 h-18 z"
+        android:fillColor="#38BDF8" />
+    <path
+        android:pathData="M32,63 h38 v2 h-38 z M32,67 h26 v2 h-26 z"
+        android:fillColor="#CBD5E1" />
+
+    <!-- Card Gold Smart Chip Accent -->
+    <path
+        android:pathData="M70,52 h6 v7 h-6 z"
+        android:fillColor="#F59E0B" />
+
+    <!-- APP INTERFACE / CAMERA SCANNER RETICLE CORNERS -->
+    <!-- Top-Left Corner -->
+    <path
+        android:pathData="M16,22 h14 v3.5 h-10.5 v10.5 h-3.5 z"
+        android:fillColor="#38BDF8" />
+    <!-- Top-Right Corner -->
+    <path
+        android:pathData="M92,22 h-14 v3.5 h10.5 v10.5 h3.5 z"
+        android:fillColor="#38BDF8" />
+    <!-- Bottom-Left Corner -->
+    <path
+        android:pathData="M16,86 h14 v-3.5 h-10.5 v-10.5 h-3.5 z"
+        android:fillColor="#A855F7" />
+    <!-- Bottom-Right Corner -->
+    <path
+        android:pathData="M92,86 h-14 v-3.5 h10.5 v-10.5 h3.5 z"
+        android:fillColor="#A855F7" />
+
+    <!-- AI LASER SCANNER BEAM -->
+    <path
+        android:pathData="M12,56 h84 v3 h-84 z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="12"
+                android:startY="57.5"
+                android:endX="96"
+                android:endY="57.5"
+                android:type="linear">
+                <item android:offset="0.0" android:color="#002DD4BF" />
+                <item android:offset="0.2" android:color="#2DD4BF" />
+                <item android:offset="0.5" android:color="#FACC15" />
+                <item android:offset="0.8" android:color="#2DD4BF" />
+                <item android:offset="1.0" android:color="#002DD4BF" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- AI Sparkle / Contact Verified Badge -->
+    <path
+        android:pathData="M84,36 a6,6 0 1,0 0,-12 a6,6 0 0,0 0,12 z"
+        android:fillColor="#10B981" />
+    <path
+        android:pathData="M81.5,30 L83.5,32 L87,28.5"
+        android:strokeColor="#FFFFFF"
+        android:strokeWidth="1.5"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round" />
+
 </vector>
+
