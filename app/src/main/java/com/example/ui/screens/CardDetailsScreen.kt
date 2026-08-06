@@ -25,27 +25,17 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.AutoAwesome
-import androidx.compose.material.icons.filled.Badge
-import androidx.compose.material.icons.filled.Business
-import androidx.compose.material.icons.filled.Call
-import androidx.compose.material.icons.filled.Category
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Image
-import androidx.compose.material.icons.filled.Language
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.PersonAdd
 import androidx.compose.material.icons.filled.Phone
-import androidx.compose.material.icons.filled.QrCode
-import androidx.compose.material.icons.filled.Save
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.filled.StarOutline
-import androidx.compose.material.icons.filled.TableChart
-import androidx.compose.material.icons.filled.Title
-import androidx.compose.material.icons.filled.Web
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -156,7 +146,7 @@ fun CardDetailsScreen(
             onDismissRequest = { showQrDialog = false },
             icon = {
                 Icon(
-                    imageVector = Icons.Default.QrCode,
+                    imageVector = Icons.Default.Share,
                     contentDescription = null,
                     tint = IndigoPrimary,
                     modifier = Modifier.size(32.dp)
@@ -335,7 +325,7 @@ fun CardDetailsScreen(
                     modifier = Modifier.testTag("detail_qr_button")
                 ) {
                     Icon(
-                        imageVector = Icons.Default.QrCode,
+                        imageVector = Icons.Default.Share,
                         contentDescription = "Scan QR Code",
                         tint = IndigoPrimary,
                         modifier = Modifier.size(24.dp)
@@ -351,7 +341,7 @@ fun CardDetailsScreen(
                     modifier = Modifier.testTag("detail_star_button")
                 ) {
                     Icon(
-                        imageVector = if (isStarred) Icons.Default.Star else Icons.Default.StarOutline,
+                        imageVector = if (isStarred) Icons.Default.Star else Icons.Default.FavoriteBorder,
                         contentDescription = "Priority Star",
                         tint = if (isStarred) AmberOffline else TextMuted,
                         modifier = Modifier.size(26.dp)
@@ -465,7 +455,7 @@ fun CardDetailsScreen(
                         .height(44.dp)
                         .testTag("call_action_button")
                 ) {
-                    Icon(Icons.Default.Call, contentDescription = "Call", tint = Color.Black, modifier = Modifier.size(18.dp))
+                    Icon(Icons.Default.Phone, contentDescription = "Call", tint = Color.Black, modifier = Modifier.size(18.dp))
                     Spacer(modifier = Modifier.width(6.dp))
                     Text("Call", color = Color.Black, fontWeight = FontWeight.Bold)
                 }
@@ -485,7 +475,7 @@ fun CardDetailsScreen(
                         .border(1.dp, DarkBorder, RoundedCornerShape(14.dp))
                         .testTag("email_action_button")
                 ) {
-                    Icon(Icons.Default.Email, contentDescription = "Email", tint = TextPrimary, modifier = Modifier.size(18.dp))
+                    Icon(Icons.Default.Person, contentDescription = "Email", tint = TextPrimary, modifier = Modifier.size(18.dp))
                     Spacer(modifier = Modifier.width(6.dp))
                     Text("Email", color = TextPrimary, fontWeight = FontWeight.Bold)
                 }
@@ -518,7 +508,7 @@ fun CardDetailsScreen(
                 .height(48.dp)
                 .testTag("export_phone_contacts_button")
         ) {
-            Icon(Icons.Default.PersonAdd, contentDescription = "Save / Edit on Phone Contacts", tint = Color.Black, modifier = Modifier.size(20.dp))
+            Icon(Icons.Default.Person, contentDescription = "Save / Edit on Phone Contacts", tint = Color.Black, modifier = Modifier.size(20.dp))
             Spacer(modifier = Modifier.width(8.dp))
             Text("Save / Edit on Phone Contacts", color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 14.sp)
         }
@@ -551,7 +541,7 @@ fun CardDetailsScreen(
                     .height(44.dp)
                     .testTag("share_option_qr")
             ) {
-                Icon(Icons.Default.QrCode, contentDescription = "QR Code", tint = IndigoPrimary, modifier = Modifier.size(16.dp))
+                Icon(Icons.Default.Share, contentDescription = "QR Code", tint = IndigoPrimary, modifier = Modifier.size(16.dp))
                 Spacer(modifier = Modifier.width(4.dp))
                 Text("QR Code", color = TextPrimary, fontSize = 11.sp, fontWeight = FontWeight.Bold)
             }
@@ -579,7 +569,7 @@ fun CardDetailsScreen(
                     .height(44.dp)
                     .testTag("share_option_vcard")
             ) {
-                Icon(Icons.Default.Badge, contentDescription = "vCard", tint = AmberOffline, modifier = Modifier.size(16.dp))
+                Icon(Icons.Default.Person, contentDescription = "vCard", tint = AmberOffline, modifier = Modifier.size(16.dp))
                 Spacer(modifier = Modifier.width(4.dp))
                 Text("vCard", color = TextPrimary, fontSize = 11.sp, fontWeight = FontWeight.Bold)
             }
@@ -607,7 +597,7 @@ fun CardDetailsScreen(
                     .height(44.dp)
                     .testTag("share_option_csv")
             ) {
-                Icon(Icons.Default.TableChart, contentDescription = "CSV", tint = EmeraldOnline, modifier = Modifier.size(16.dp))
+                Icon(Icons.Default.Info, contentDescription = "CSV", tint = EmeraldOnline, modifier = Modifier.size(16.dp))
                 Spacer(modifier = Modifier.width(4.dp))
                 Text("CSV", color = TextPrimary, fontSize = 11.sp, fontWeight = FontWeight.Bold)
             }
@@ -636,7 +626,7 @@ fun CardDetailsScreen(
                         .height(44.dp)
                         .testTag("share_option_image")
                 ) {
-                    Icon(Icons.Default.Image, contentDescription = "Card Image", tint = Color(0xFF38BDF8), modifier = Modifier.size(16.dp))
+                    Icon(Icons.Default.Share, contentDescription = "Card Image", tint = Color(0xFF38BDF8), modifier = Modifier.size(16.dp))
                     Spacer(modifier = Modifier.width(4.dp))
                     Text("Image", color = TextPrimary, fontSize = 11.sp, fontWeight = FontWeight.Bold)
                 }
@@ -671,7 +661,7 @@ fun CardDetailsScreen(
                         .testTag("category_selector_chip")
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Icon(Icons.Default.Category, contentDescription = null, tint = IndigoPrimary, modifier = Modifier.size(14.dp))
+                        Icon(Icons.Default.Info, contentDescription = null, tint = IndigoPrimary, modifier = Modifier.size(14.dp))
                         Spacer(modifier = Modifier.width(6.dp))
                         Text(
                             text = category,
@@ -714,7 +704,7 @@ fun CardDetailsScreen(
             value = title,
             onValueChange = { title = it },
             label = "Designation / Job Title",
-            icon = Icons.Default.Title,
+            icon = Icons.Default.Edit,
             testTag = "detail_title_input"
         )
 
@@ -723,7 +713,7 @@ fun CardDetailsScreen(
             value = company,
             onValueChange = { company = it },
             label = "Company / Organization Name",
-            icon = Icons.Default.Business,
+            icon = Icons.Default.Home,
             testTag = "detail_company_input"
         )
 
@@ -732,7 +722,7 @@ fun CardDetailsScreen(
             value = phone,
             onValueChange = { phone = it },
             label = "Phone Number",
-            icon = Icons.Default.Call,
+            icon = Icons.Default.Phone,
             testTag = "detail_phone_input"
         )
 
@@ -741,7 +731,7 @@ fun CardDetailsScreen(
             value = email,
             onValueChange = { email = it },
             label = "Email Address",
-            icon = Icons.Default.Email,
+            icon = Icons.Default.Person,
             testTag = "detail_email_input"
         )
 
@@ -750,7 +740,7 @@ fun CardDetailsScreen(
             value = website,
             onValueChange = { website = it },
             label = "Website URL",
-            icon = Icons.Default.Web,
+            icon = Icons.Default.Share,
             testTag = "detail_website_input"
         )
 
@@ -794,7 +784,7 @@ fun CardDetailsScreen(
                     .height(50.dp)
                     .testTag("bottom_contacts_save_button")
             ) {
-                Icon(Icons.Default.PersonAdd, contentDescription = null, tint = Color.Black, modifier = Modifier.size(18.dp))
+                Icon(Icons.Default.Person, contentDescription = null, tint = Color.Black, modifier = Modifier.size(18.dp))
                 Spacer(modifier = Modifier.width(6.dp))
                 Text("To Phone Contacts", color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 12.sp)
             }
@@ -822,7 +812,7 @@ fun CardDetailsScreen(
                     .height(50.dp)
                     .testTag("save_card_details_button")
             ) {
-                Icon(Icons.Default.Save, contentDescription = "Save", tint = Color.White, modifier = Modifier.size(18.dp))
+                Icon(Icons.Default.Check, contentDescription = "Save", tint = Color.White, modifier = Modifier.size(18.dp))
                 Spacer(modifier = Modifier.width(6.dp))
                 Text("Save Changes", color = Color.White, fontWeight = FontWeight.Bold, fontSize = 12.sp)
             }

@@ -13,8 +13,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.CropFree
-import androidx.compose.material.icons.filled.FolderSpecial
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -54,7 +54,7 @@ fun BottomNav(
     ) {
         NavItem(
             label = "Scan",
-            icon = Icons.Default.CropFree,
+            icon = Icons.Default.Search,
             isSelected = currentRoute == ScreenRoute.SCAN || currentRoute == ScreenRoute.PREVIEW_EDIT,
             onClick = { onNavigate(ScreenRoute.SCAN) },
             testTag = "nav_scan_button"
@@ -62,7 +62,7 @@ fun BottomNav(
 
         NavItem(
             label = "Vault",
-            icon = Icons.Default.FolderSpecial,
+            icon = Icons.Default.Home,
             isSelected = currentRoute == ScreenRoute.VAULT || currentRoute == ScreenRoute.CARD_DETAILS,
             onClick = { onNavigate(ScreenRoute.VAULT) },
             testTag = "nav_vault_button"

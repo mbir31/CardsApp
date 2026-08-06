@@ -32,16 +32,13 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AutoAwesome
-import androidx.compose.material.icons.filled.CameraAlt
-import androidx.compose.material.icons.filled.Cancel
-import androidx.compose.material.icons.filled.CenterFocusWeak
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.CropFree
-import androidx.compose.material.icons.filled.FlashOn
-import androidx.compose.material.icons.filled.Image
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.WbSunny
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -297,7 +294,7 @@ fun ScanScreen(
                             .testTag("flash_toggle_button")
                     ) {
                         Icon(
-                            imageVector = Icons.Default.FlashOn,
+                            imageVector = Icons.Default.Star,
                             contentDescription = "Flash",
                             tint = if (isFlashOn) Color.White else TextMuted,
                             modifier = Modifier.size(15.dp)
@@ -324,7 +321,7 @@ fun ScanScreen(
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
-                                imageVector = Icons.Default.WbSunny,
+                                imageVector = Icons.Default.Star,
                                 contentDescription = null,
                                 tint = IndigoPrimary,
                                 modifier = Modifier.size(15.dp)
@@ -354,7 +351,7 @@ fun ScanScreen(
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
-                                imageVector = Icons.Default.CenterFocusWeak,
+                                imageVector = Icons.Default.Search,
                                 contentDescription = null,
                                 tint = EmeraldOnline,
                                 modifier = Modifier.size(15.dp)
@@ -384,7 +381,7 @@ fun ScanScreen(
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
-                                imageVector = Icons.Default.CropFree,
+                                imageVector = Icons.Default.Search,
                                 contentDescription = null,
                                 tint = IndigoPrimary,
                                 modifier = Modifier.size(15.dp)
@@ -501,7 +498,7 @@ fun ScanScreen(
             } else {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Icon(
-                        imageVector = Icons.Default.CropFree,
+                        imageVector = Icons.Default.Search,
                         contentDescription = null,
                         tint = Color.White.copy(alpha = 0.6f),
                         modifier = Modifier.size(44.dp)
@@ -546,7 +543,7 @@ fun ScanScreen(
                     .testTag("capture_card_button")
             ) {
                 Icon(
-                    imageVector = Icons.Default.CameraAlt,
+                    imageVector = Icons.Default.Add,
                     contentDescription = "Capture",
                     tint = Color.White,
                     modifier = Modifier.size(22.dp)
@@ -580,7 +577,7 @@ fun ScanScreen(
                         .testTag("demo_sample_button")
                 ) {
                     Icon(
-                        imageVector = Icons.Default.AutoAwesome,
+                        imageVector = Icons.Default.Star,
                         contentDescription = "Demo",
                         tint = EmeraldOnline,
                         modifier = Modifier.size(18.dp)
@@ -605,7 +602,7 @@ fun ScanScreen(
                         .testTag("gallery_import_button")
                 ) {
                     Icon(
-                        imageVector = Icons.Default.Image,
+                        imageVector = Icons.Default.Share,
                         contentDescription = "Gallery",
                         tint = IndigoPrimary,
                         modifier = Modifier.size(18.dp)
@@ -734,7 +731,7 @@ fun ScanInstructionPanel(
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
-                        imageVector = if (isRecommended) Icons.Default.CheckCircle else Icons.Default.Cancel,
+                        imageVector = if (isRecommended) Icons.Default.Check else Icons.Default.Close,
                         contentDescription = null,
                         tint = Color.White,
                         modifier = Modifier.size(12.dp)
@@ -843,7 +840,7 @@ fun ScanInstructionPanel(
                 horizontalArrangement = Arrangement.spacedBy(4.dp)
             ) {
                 Icon(
-                    imageVector = if (isRecommended) Icons.Default.CheckCircle else Icons.Default.Cancel,
+                    imageVector = if (isRecommended) Icons.Default.Check else Icons.Default.Close,
                     contentDescription = null,
                     tint = if (isRecommended) Color(0xFF00E676) else Color(0xFFFF5252),
                     modifier = Modifier.size(12.dp)

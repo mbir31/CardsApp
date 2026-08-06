@@ -14,10 +14,8 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AutoAwesome
-import androidx.compose.material.icons.filled.CloudOff
-import androidx.compose.material.icons.filled.Wifi
-import androidx.compose.material.icons.filled.WifiOff
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -116,7 +114,7 @@ fun TopHeader(
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Icon(
-                    imageVector = if (onlineAiMode && isOnline) Icons.Default.AutoAwesome else Icons.Default.CloudOff,
+                    imageVector = if (onlineAiMode && isOnline) Icons.Default.Star else Icons.Default.Info,
                     contentDescription = "Status Icon",
                     tint = if (onlineAiMode && isOnline) IndigoPrimary else AmberOffline,
                     modifier = Modifier.size(16.dp)

@@ -21,19 +21,15 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.AutoAwesome
-import androidx.compose.material.icons.filled.Business
-import androidx.compose.material.icons.filled.Call
 import androidx.compose.material.icons.filled.Check
-import androidx.compose.material.icons.filled.ContactPage
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.Language
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.Save
-import androidx.compose.material.icons.filled.Title
-import androidx.compose.material.icons.filled.Web
+import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -112,7 +108,7 @@ fun PreviewEditScreen(
             },
             icon = {
                 Icon(
-                    imageVector = Icons.Default.ContactPage,
+                    imageVector = Icons.Default.Person,
                     contentDescription = null,
                     tint = IndigoPrimary,
                     modifier = Modifier.size(32.dp)
@@ -342,7 +338,7 @@ fun PreviewEditScreen(
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
-                            imageVector = Icons.Default.AutoAwesome,
+                            imageVector = Icons.Default.Star,
                             contentDescription = null,
                             tint = IndigoPrimary,
                             modifier = Modifier.size(16.dp)
@@ -412,7 +408,7 @@ fun PreviewEditScreen(
             value = title,
             onValueChange = { title = it; onUpdateResult(result.copy(title = it)) },
             label = "Job Title / Designation",
-            icon = Icons.Default.Title,
+            icon = Icons.Default.Edit,
             testTag = "edit_title_input"
         )
 
@@ -420,7 +416,7 @@ fun PreviewEditScreen(
             value = company,
             onValueChange = { company = it; onUpdateResult(result.copy(company = it)) },
             label = "Company / Organization",
-            icon = Icons.Default.Business,
+            icon = Icons.Default.Home,
             testTag = "edit_company_input"
         )
 
@@ -428,7 +424,7 @@ fun PreviewEditScreen(
             value = phone,
             onValueChange = { phone = it; onUpdateResult(result.copy(phone = it)) },
             label = "Phone Number",
-            icon = Icons.Default.Call,
+            icon = Icons.Default.Phone,
             testTag = "edit_phone_input"
         )
 
@@ -436,7 +432,7 @@ fun PreviewEditScreen(
             value = email,
             onValueChange = { email = it; onUpdateResult(result.copy(email = it)) },
             label = "Email Address",
-            icon = Icons.Default.Email,
+            icon = Icons.Default.Person,
             testTag = "edit_email_input"
         )
 
@@ -444,7 +440,7 @@ fun PreviewEditScreen(
             value = website,
             onValueChange = { website = it; onUpdateResult(result.copy(website = it)) },
             label = "Website URL",
-            icon = Icons.Default.Web,
+            icon = Icons.Default.Share,
             testTag = "edit_website_input"
         )
 

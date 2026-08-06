@@ -19,25 +19,14 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.AutoAwesome
-import androidx.compose.material.icons.filled.Backup
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.CloudDone
-import androidx.compose.material.icons.filled.CloudOff
-import androidx.compose.material.icons.filled.CloudQueue
-import androidx.compose.material.icons.filled.Download
-import androidx.compose.material.icons.filled.FileUpload
-import androidx.compose.material.icons.filled.FolderZip
-import androidx.compose.material.icons.filled.Key
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Restore
-import androidx.compose.material.icons.filled.Router
-import androidx.compose.material.icons.filled.Save
-import androidx.compose.material.icons.filled.Security
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.Speed
-import androidx.compose.material.icons.filled.Wifi
+import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -162,7 +151,7 @@ fun SettingsScreen(
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
-                                imageVector = if (settings.isDriveConnected) Icons.Default.CloudDone else Icons.Default.CloudQueue,
+                                imageVector = if (settings.isDriveConnected) Icons.Default.Check else Icons.Default.Share,
                                 contentDescription = null,
                                 tint = if (settings.isDriveConnected) IndigoPrimary else TextMuted,
                                 modifier = Modifier.size(22.dp)
@@ -214,7 +203,7 @@ fun SettingsScreen(
                     Column(modifier = Modifier.weight(1f).padding(end = 8.dp)) {
                         Row(verticalAlignment = Alignment.CenterVertically) {
                             Icon(
-                                imageVector = Icons.Default.Backup,
+                                imageVector = Icons.Default.Share,
                                 contentDescription = null,
                                 tint = IndigoPrimary,
                                 modifier = Modifier.size(16.dp)
@@ -272,7 +261,7 @@ fun SettingsScreen(
                             .fillMaxWidth()
                             .testTag("connect_drive_button")
                     ) {
-                        Icon(Icons.Default.AccountCircle, contentDescription = null, modifier = Modifier.size(18.dp))
+                        Icon(Icons.Default.Person, contentDescription = null, modifier = Modifier.size(18.dp))
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
                             text = "Connect Google Drive Account",
@@ -292,7 +281,7 @@ fun SettingsScreen(
                                 .weight(1f)
                                 .testTag("backup_now_button")
                         ) {
-                            Icon(Icons.Default.Backup, contentDescription = null, modifier = Modifier.size(16.dp))
+                            Icon(Icons.Default.Share, contentDescription = null, modifier = Modifier.size(16.dp))
                             Spacer(modifier = Modifier.width(6.dp))
                             Text("Backup Now")
                         }
@@ -306,7 +295,7 @@ fun SettingsScreen(
                                 .border(1.dp, DarkBorder, RoundedCornerShape(14.dp))
                                 .testTag("restore_now_button")
                         ) {
-                            Icon(Icons.Default.Restore, contentDescription = null, tint = TextPrimary, modifier = Modifier.size(16.dp))
+                            Icon(Icons.Default.Refresh, contentDescription = null, tint = TextPrimary, modifier = Modifier.size(16.dp))
                             Spacer(modifier = Modifier.width(6.dp))
                             Text("Restore", color = TextPrimary)
                         }
@@ -377,7 +366,7 @@ fun SettingsScreen(
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
-                                imageVector = Icons.Default.Save,
+                                imageVector = Icons.Default.Check,
                                 contentDescription = null,
                                 tint = EmeraldOnline,
                                 modifier = Modifier.size(20.dp)
@@ -433,7 +422,7 @@ fun SettingsScreen(
                             .weight(1f)
                             .testTag("export_local_backup_button")
                     ) {
-                        Icon(Icons.Default.FileUpload, contentDescription = null, modifier = Modifier.size(16.dp))
+                        Icon(Icons.Default.Share, contentDescription = null, modifier = Modifier.size(16.dp))
                         Spacer(modifier = Modifier.width(6.dp))
                         Text("Export Backup")
                     }
@@ -447,7 +436,7 @@ fun SettingsScreen(
                             .border(1.dp, DarkBorder, RoundedCornerShape(14.dp))
                             .testTag("restore_local_backup_button")
                     ) {
-                        Icon(Icons.Default.Download, contentDescription = null, tint = TextPrimary, modifier = Modifier.size(16.dp))
+                        Icon(Icons.Default.Refresh, contentDescription = null, tint = TextPrimary, modifier = Modifier.size(16.dp))
                         Spacer(modifier = Modifier.width(6.dp))
                         Text("Restore Local", color = TextPrimary)
                     }
@@ -490,7 +479,7 @@ fun SettingsScreen(
                             contentAlignment = Alignment.Center
                         ) {
                             Icon(
-                                imageVector = if (settings.onlineAiMode) Icons.Default.AutoAwesome else Icons.Default.CloudOff,
+                                imageVector = if (settings.onlineAiMode) Icons.Default.Star else Icons.Default.Info,
                                 contentDescription = null,
                                 tint = if (settings.onlineAiMode) EmeraldOnline else AmberOffline,
                                 modifier = Modifier.size(20.dp)
@@ -537,7 +526,7 @@ fun SettingsScreen(
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
-                            imageVector = Icons.Default.Security,
+                            imageVector = Icons.Default.Lock,
                             contentDescription = null,
                             tint = EmeraldOnline,
                             modifier = Modifier.size(16.dp)
@@ -630,7 +619,7 @@ fun SettingsScreen(
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
-                            imageVector = if (isOnline) Icons.Default.Wifi else Icons.Default.Router,
+                            imageVector = if (isOnline) Icons.Default.Check else Icons.Default.Info,
                             contentDescription = null,
                             tint = if (isOnline) EmeraldOnline else AmberOffline,
                             modifier = Modifier.size(18.dp)
@@ -660,7 +649,7 @@ fun SettingsScreen(
                 ) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
-                            imageVector = Icons.Default.Key,
+                            imageVector = Icons.Default.Lock,
                             contentDescription = null,
                             tint = IndigoPrimary,
                             modifier = Modifier.size(18.dp)

@@ -25,20 +25,17 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.AutoAwesome
-import androidx.compose.material.icons.filled.Call
-import androidx.compose.material.icons.filled.Category
-import androidx.compose.material.icons.filled.DeleteOutline
-import androidx.compose.material.icons.filled.Email
-import androidx.compose.material.icons.filled.FilterList
-import androidx.compose.material.icons.filled.Image
-import androidx.compose.material.icons.filled.Language
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Lock
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Phone
 import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Security
-import androidx.compose.material.icons.filled.Sort
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.filled.StarOutline
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -116,7 +113,7 @@ fun VaultScreen(
             onDismissRequest = { cardToDelete = null },
             icon = {
                 Icon(
-                    imageVector = Icons.Default.DeleteOutline,
+                    imageVector = Icons.Default.Delete,
                     contentDescription = null,
                     tint = Color(0xFFEF4444),
                     modifier = Modifier.size(28.dp)
@@ -195,7 +192,7 @@ fun VaultScreen(
                 Column(modifier = Modifier.weight(1f)) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
-                            imageVector = Icons.Default.Security,
+                            imageVector = Icons.Default.Lock,
                             contentDescription = null,
                             tint = EmeraldOnline,
                             modifier = Modifier.size(16.dp)
@@ -276,7 +273,7 @@ fun VaultScreen(
                     contentAlignment = Alignment.Center
                 ) {
                     Icon(
-                        imageVector = Icons.Default.Sort,
+                        imageVector = Icons.Default.Menu,
                         contentDescription = "Sort Order",
                         tint = IndigoPrimary
                     )
@@ -400,7 +397,7 @@ fun VaultScreen(
                         colors = ButtonDefaults.buttonColors(containerColor = DarkSurface),
                         border = ButtonDefaults.outlinedButtonBorder.copy(brush = androidx.compose.ui.graphics.SolidColor(DarkBorder))
                     ) {
-                        Icon(Icons.Default.AutoAwesome, contentDescription = null, tint = EmeraldOnline, modifier = Modifier.size(16.dp))
+                        Icon(Icons.Default.Star, contentDescription = null, tint = EmeraldOnline, modifier = Modifier.size(16.dp))
                         Spacer(modifier = Modifier.width(6.dp))
                         Text("Scan Demo Card", color = TextPrimary)
                     }
@@ -565,7 +562,7 @@ private fun CardRowItem(
                         .testTag("star_card_button_${card.id}")
                 ) {
                     Icon(
-                        imageVector = if (card.isStarred) Icons.Default.Star else Icons.Default.StarOutline,
+                        imageVector = if (card.isStarred) Icons.Default.Star else Icons.Default.FavoriteBorder,
                         contentDescription = "Star Contact",
                         tint = if (card.isStarred) AmberOffline else TextMuted,
                         modifier = Modifier.size(20.dp)
@@ -579,7 +576,7 @@ private fun CardRowItem(
                         .testTag("delete_card_button_${card.id}")
                 ) {
                     Icon(
-                        imageVector = Icons.Default.DeleteOutline,
+                        imageVector = Icons.Default.Delete,
                         contentDescription = "Delete Card",
                         tint = Color(0xFFEF4444).copy(alpha = 0.85f),
                         modifier = Modifier.size(20.dp)
